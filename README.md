@@ -1,2 +1,2 @@
 # reactclasses
-same exercises on react 
+some exercises on react 
