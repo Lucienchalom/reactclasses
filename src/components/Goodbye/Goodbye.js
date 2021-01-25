@@ -1,9 +1,10 @@
 import './Goodbye.css';
-import { Component } from 'react';
+import { Component, createRef } from 'react';
 
 export class Goodbye extends Component {
     constructor(props) {
         super(props)
+        this.novaMensagem = ""
         this.state = {
             mensagens: [
                 "you say goodbye",
@@ -12,24 +13,34 @@ export class Goodbye extends Component {
             ],
             novaMensagem: "",
         }
+        this.ref = createRef();
     }
+    componentDidMount() {
+        console.log("log")
+    }
+    componentDidUpdate(props, state) {
+        console.log(props, state)
+    }
+
     gerenciarInput(valor) {
-        this.setState({
-            novaMensagem:valor
-        })
-        console.log(valor)
+        this.novaMensagem = valor;
+        //     this.setState({
+        //         novaMensagem:valor
+        //     })
+        //     console.log(valor)
     }
     adicionarMensagem() {
         const mensagens = this.state.mensagens;
-        const novaMensagem = this.state.novaMensagem;
+        const novaMensagem = this.novaMensagem;
         const novasMensagens = [
-            ... mensagens,
+            ...mensagens,
             novaMensagem,
         ]
         this.setState({
             mensagens: novasMensagens,
-            novaMensagem: "",
+            //    novaMensagem: "",
         })
+        this.ref.current.value = "";
         console.log("metodo foi chamado")
     }
     render() {
@@ -40,7 +51,7 @@ export class Goodbye extends Component {
                         return <p> {mensagem} </p>
                     })
                 }
-                <input onChange={evento => this.gerenciarInput(evento.target.value)} type="text" />
+                <input ref={this.ref} onChange={evento => this.gerenciarInput(evento.target.value)} type="text" /> 
                 <button onClick={() => this.adicionarMensagem()}>adicionar mensagem</button>
             </div>
         )
